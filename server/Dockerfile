@@ -7,7 +7,7 @@ FROM base as production
 ENV NODE_ENV=production
 RUN npm install --only=production
 COPY . /app
-CMD ["node", "app.js"]
+CMD ["node", "app.ts"]
 
 FROM base as dev
 ENV NODE_ENV=development
