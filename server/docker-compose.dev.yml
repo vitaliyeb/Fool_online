@@ -2,14 +2,26 @@ version: '0.1'
 services:
   express:
     image: node
+    build:
+      context: ./
+      target: dev
     ports:
       - 8000:8000
     environment:
       PORT: 8000
-    build:
-      context: ./
-      target: dev
+      MONGO_USER: root
+      MONGO_PASSWORD: 12345
     restart: unless-stopped
+    depends_on: mongo
     volumes:
       - ./:/app
       - /app/node_modules
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=12345
+    volumes:
+      - mongo-db:/data/db
+volumes:
+  mongo-db:
